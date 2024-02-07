@@ -1,9 +1,10 @@
 <section class="todoapp">
   <header class="header">
     <div class="container">
-      <h1>My Day</h1>
-      <p>All my tasks in one place</p>
-      <input class="new-todo" placeholder="Type new todo" autofocus type="text" />
+      <h1>Mi día</h1>
+      <p>Todas mis tareas</p>
+      <input class="new-todo" placeholder="Crear una nueva tarea" autofocus type="text"
+        (keyup.enter)="handleAddTask($event);" />
     </div>
   </header>
   <div class="container todoapp-wrapper">
@@ -19,11 +20,11 @@
           <input class="edit" value="Learn JavaScript" />
         </li> -->
         @for (task of tasks(); track $index) {
-        <li>
+        <li [classList]="task.completed && 'completed'">
           <div class="view">
-            <input class="toggle" type="checkbox" />
-            <label>{{task}}</label>
-            <button class="destroy"></button>
+            <input class="toggle" type="checkbox" [checked]="task.completed" (click)="handleCompleteTask($index)" />
+            <label>{{task.title}}</label>
+            <button class="destroy" (click)="handleDeleteTask($index)"></button>
           </div>
           <input class="edit" value="Buy a unicorn" />
         </li>
