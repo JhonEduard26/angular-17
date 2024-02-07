@@ -1,0 +1,29 @@
+<div class="container">
+  <ul>
+    @for (item of tasks; track $index) {
+    <li>{{item}}</li>
+    }
+  </ul>
+  <hr />
+  <h3>{{'hello'.repeat(4)}}</h3>
+  <hr />
+  <p>La suma de 3 + 3 es {{3 + 3}}</p>
+  <hr />
+  <img [src]="urlImg" alt="" />
+  <hr />
+  <input type="text" [value]="name()">
+  <button (click)="handleClick()">
+    Click me
+  </button>
+  <hr />
+  <input type="text" [value]="name()" (keyup)="handleKeyDown($event)">
+  <h1>Signals</h1>
+  <p>{{name()}}</p>
+  <hr>
+  <ul>
+    <p>Total: {{anotherTasks().length}}</p>
+    @for (task of anotherTasks(); track $index) {
+    <li>{{$index}} - {{task}}</li>
+    }
+  </ul>
+</div>
