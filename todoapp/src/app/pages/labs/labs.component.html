@@ -26,4 +26,31 @@
     <li>{{$index}} - {{task}}</li>
     }
   </ul>
+  <hr />
+  @if (false) {
+    <div >
+      <p>My content</p>
+    </div>
+  }
+  <hr />
+  <input type="text" [value]="person().name" (change)="handleInputSignal($event)">
+  @switch (person().name) {
+    @case ('Jhon') {
+      Case Jhon
+    }
+    @case ('Maria') {
+      Case Maria
+    }
+    @case ('Pedro') {
+      Case Pedro
+    }
+    @default {
+      Default
+    }
+  }
+
+  <hr />
+  <input type="color" name="" id="" [formControl]="colorCtrl">
+  <p>Color: {{colorCtrl.value}}</p>
+
 </div>
