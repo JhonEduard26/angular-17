@@ -28,29 +28,42 @@
   </ul>
   <hr />
   @if (false) {
-    <div >
-      <p>My content</p>
-    </div>
+  <div>
+    <p>My content</p>
+  </div>
   }
   <hr />
   <input type="text" [value]="person().name" (change)="handleInputSignal($event)">
   @switch (person().name) {
-    @case ('Jhon') {
-      Case Jhon
-    }
-    @case ('Maria') {
-      Case Maria
-    }
-    @case ('Pedro') {
-      Case Pedro
-    }
-    @default {
-      Default
-    }
+  @case ('Jhon') {
+  Case Jhon
+  }
+  @case ('Maria') {
+  Case Maria
+  }
+  @case ('Pedro') {
+  Case Pedro
+  }
+  @default {
+  Default
+  }
   }
 
   <hr />
   <input type="color" name="" id="" [formControl]="colorCtrl">
   <p>Color: {{colorCtrl.value}}</p>
+  <svg>
+    <g>
+      <rect width="80" height="100" [attr.fill]="colorCtrl.value" />
+    </g>
+  </svg>
 
+  <hr />
+  <br />
+  <p>
+    <input class="input-name" [class.input-error]="nameCtrl.invalid && nameCtrl.touched" [class.input-success]="nameCtrl.valid" type="text" [formControl]="nameCtrl">
+    <br />
+    <span>Nombre invalido</span>
+  </p>
+  <input type="text" name="" id="">
 </div>

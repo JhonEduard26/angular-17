@@ -1,10 +1,11 @@
 import { Component, signal } from '@angular/core';
 import { Task } from '../../models/task.model';
+import { FormControl, ReactiveFormsModule, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [],
+  imports: [ReactiveFormsModule],
   templateUrl: './home.component.html',
   styleUrl: './home.component.css'
 })
@@ -27,26 +28,71 @@ export class HomeComponent {
     },
   ]);
 
-  handleAddTask(event: Event) {
-    const input = event.target as HTMLInputElement;
+  newTaskCtrl = new FormControl('', {
+    nonNullable: true,
+    validators: [
+      Validators.required,
+      Validators.pattern(/^\S+(\s\S+)*$/),
+      Validators.minLength(3),
+    ]
+  })
+
+  onChange() {
+    if (this.newTaskCtrl.valid) {
+      const value = this.newTaskCtrl.value;
+      this.onAdd(value);
+      this.newTaskCtrl.setValue('');
+    }
+  }
+
+  onAdd(value: string) {
     const newTask = {
       id: Date.now(),
-      title: input.value.trim(),
+      title: value,
       completed: false,
     }
 
-    if (!newTask.title) {
-      return;
-    }
     this.tasks.update((tasks) => [...tasks, newTask]);
-
-    input.value = '';
   }
 
-  values = Array.from({ length: 1000 }, (_, i) => i);
+  onUpdate(index: number, event: Event) {
+    const input = event.target as HTMLInputElement;
 
-  handleDeleteTask(index: number) {
-    this.tasks.update((tasks) => tasks.toSpliced(index, 1))
+    this.tasks.update((tasks) => {
+      return tasks.map((task, i) => {
+        if (i === index) {
+          return {
+            ...task,
+            title: input.value,
+            editing: false
+          }
+        }
+
+        return task;
+      })
+    })
+  }
+
+  onEdit(index: number) {
+    this.tasks.update((tasks) => {
+      return tasks.map((task, i) => {
+        if (i === index) {
+          return {
+            ...task,
+            editing: true
+          }
+        }
+
+        return {
+          ...task,
+          editing: false
+        }
+      })
+    })
+  }
+
+  onDelete(index: number) {
+    this.tasks.update((tasks) => tasks.toSpliced(index, 1));
   }
 
   handleCompleteTask(index: number) {
@@ -57,7 +103,7 @@ export class HomeComponent {
       if (taskToUpdate) {
         taskToUpdate.completed = !taskToUpdate.completed;
       }
-      return updatedTask
+      return updatedTask;
     })
   }
 }

@@ -3,40 +3,24 @@
     <div class="container">
       <h1>Mi día</h1>
       <p>Todas mis tareas</p>
-      <input class="new-todo" placeholder="Crear una nueva tarea" autofocus type="text"
-        (keyup.enter)="handleAddTask($event);" />
+      <input class="new-todo" placeholder="Crear una nueva tarea" autofocus type="text" [formControl]="newTaskCtrl"
+        (keyup.enter)="onChange();" />
     </div>
   </header>
   <div class="container todoapp-wrapper">
     <!-- This section should be hidden by default and shown when there are todos -->
     <section class="main">
       <ul class="todo-list">
-        <!-- <li class="completed">
-          <div class="view">
-            <input class="toggle" type="checkbox" checked />
-            <label>Learn JavaScript</label>
-            <button class="destroy"></button>
-          </div>
-          <input class="edit" value="Learn JavaScript" />
-        </li> -->
         @for (task of tasks(); track $index) {
-        <li [classList]="task.completed && 'completed'">
+        <li (dblclick)="onEdit($index)" [class.editing]="task.editing" [class.completed]="task.completed">
           <div class="view">
             <input class="toggle" type="checkbox" [checked]="task.completed" (click)="handleCompleteTask($index)" />
             <label>{{task.title}}</label>
-            <button class="destroy" (click)="handleDeleteTask($index)"></button>
+            <button class="destroy" (click)="onDelete($index)"></button>
           </div>
-          <input class="edit" value="Buy a unicorn" />
+          <input class="edit" [value]="task.title" (keyup.enter)="onUpdate($index, $event)"/>
         </li>
         }
-        <!-- <li class="editing">
-          <div class="view">
-            <input class="toggle" type="checkbox" />
-            <label>Make dishes</label>
-            <button class="destroy"></button>
-          </div>
-          <input class="edit" value="Make dishes" />
-        </li> -->
       </ul>
     </section>
     <!-- This footer should be hidden by default and shown when there are todos -->

@@ -14,3 +14,22 @@ button {
 button:hover {
   background-color: #4834d4;
 }
+.input-name {
+  padding: 4px 8px;
+  border-radius: 4px;
+  border: 2px solid lightgray;
+}
+.input-name.input-error {
+  border: 2px solid red;
+}
+.input-name ~ span {
+  opacity: 0;
+}
+.input-name.input-error ~ span {
+  opacity: 1;
+  color: tomato;
+  font-size: 0.75rem;
+}
+.input-name.input-success {
+  border: 2px solid green;
+}
