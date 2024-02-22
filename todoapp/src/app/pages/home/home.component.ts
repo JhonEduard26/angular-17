@@ -1,4 +1,4 @@
-import { Component, signal } from '@angular/core';
+import { Component, computed, effect, signal } from '@angular/core';
 import { Task } from '../../models/task.model';
 import { FormControl, ReactiveFormsModule, Validators } from '@angular/forms';
 
@@ -10,23 +10,23 @@ import { FormControl, ReactiveFormsModule, Validators } from '@angular/forms';
   styleUrl: './home.component.css'
 })
 export class HomeComponent {
-  tasks = signal<Task[]>([
-    {
-      id: Date.now(),
-      title: 'Aprender Angular',
-      completed: false,
-    },
-    {
-      id: Date.now() + 1,
-      title: 'Aprender TypeScript',
-      completed: true,
-    },
-    {
-      id: Date.now() + 2,
-      title: 'Aprender Firebase',
-      completed: false,
-    },
-  ]);
+  tasks = signal<Task[]>([]);
+
+  filter = signal('all');
+
+  tasksByFilter = computed(() => {
+    const filter = this.filter();
+    const tasks = this.tasks();
+
+    if (filter === 'pending') {
+      return tasks.filter((task) => !task.completed);
+    }
+    if (filter === 'completed') {
+      return tasks.filter((task) => task.completed);
+    }
+
+    return tasks;
+  })
 
   newTaskCtrl = new FormControl('', {
     nonNullable: true,
@@ -36,6 +36,19 @@ export class HomeComponent {
       Validators.minLength(3),
     ]
   })
+
+  constructor() {
+    effect(() => {
+      localStorage.setItem('tasks', JSON.stringify(this.tasks()))
+    })
+  }
+
+  ngOnInit() {
+    const storage = localStorage.getItem('tasks');
+    if (storage) {
+      this.tasks.set(JSON.parse(storage))
+    }
+  }
 
   onChange() {
     if (this.newTaskCtrl.valid) {
@@ -105,5 +118,9 @@ export class HomeComponent {
       }
       return updatedTask;
     })
+  }
+
+  onFilterChange(filter: string) {
+    this.filter.set(filter);
   }
 }
