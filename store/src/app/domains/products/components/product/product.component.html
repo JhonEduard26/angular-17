@@ -1,10 +1,11 @@
-<div class="w-full max-w-sm bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
+<div class="flex flex-col max-w-sm h-[460px] bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
   <a href="#">
-    <img class="p-8 rounded-t-lg" [ngSrc]="productImg" width="640" height="640" alt="product image" />
+    <img class="m-auto p-8 rounded-t-lg aspect-square object-contain" [ngSrc]="productImg" width="300" height="280" alt="product image" />
   </a>
+  <span class="grow"></span>
   <div class="px-5 pb-5">
     <a href="#">
-      <h5 class="text-xl font-semibold tracking-tight text-gray-900 dark:text-white">{{title}}</h5>
+      <h5 class="mb-4 text-xl font-semibold tracking-tight text-gray-900 dark:text-white">{{title}}</h5>
     </a>
     <div class="flex items-center justify-between">
       <span class="text-3xl font-bold text-gray-900 dark:text-white">${{price}}</span>
