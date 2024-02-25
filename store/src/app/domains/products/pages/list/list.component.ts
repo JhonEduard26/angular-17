@@ -13,10 +13,8 @@ import { ProductComponent } from '../../components/product/product.component';
 })
 export class ListComponent {
   products = signal<Product[]>([]);
-
-  fromChild(event: string) {
-    console.log(event);
-  }
+  cart = signal<Product[]>([]);
+  total = signal(0);
 
   ngOnInit() {
     this.products.set([
@@ -111,5 +109,13 @@ export class ListComponent {
         rating: { rate: 2.9, count: 470 },
       },
     ]);
+  }
+
+  addToCart(product: Product) {
+    this.cart.update((prev) => [...prev, product]);
+  }
+
+  getTotal() {
+    this.total.set(this.cart().reduce((acc, product) => acc + product.price, 0));
   }
 }

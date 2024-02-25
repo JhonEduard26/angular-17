@@ -10,11 +10,11 @@ import { Product } from '../../../shared/models/product.model';
   styleUrl: './product.component.css'
 })
 export class ProductComponent {
-  @Input({required: true}) product!: Product;
+  @Input({ required: true }) product!: Product;
 
   @Output() addToCart = new EventEmitter();
 
-  addToCartHandler() {
-    this.addToCart.emit('Mensaje desde el hijo al padre' + this.product.title);
+  addToCartHandler(product: Product) {
+    this.addToCart.emit(product);
   }
 }
