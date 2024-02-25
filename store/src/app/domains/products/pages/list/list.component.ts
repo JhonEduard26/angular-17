@@ -1,9 +1,9 @@
 import { Component, inject, signal } from '@angular/core';
-
-import { Category, Product } from '../../../shared/models/product.model';
-import { HeaderComponent } from '../../../shared/components/header/header.component';
-import { ProductComponent } from '../../components/product/product.component';
-import { CartService } from '../../../shared/services/cart.service';
+import { ProductComponent } from '@products/components/product/product.component';
+import { HeaderComponent } from '@shared/components/header/header.component';
+import { Product } from '@shared/models/product.model';
+import { ApiService } from '@shared/services/api.service';
+import { CartService } from '@shared/services/cart.service';
 
 @Component({
   selector: 'app-list',
@@ -13,21 +13,17 @@ import { CartService } from '../../../shared/services/cart.service';
   styleUrl: './list.component.css'
 })
 export class ListComponent {
-  products = signal<Product[]>([]);
   private cartService = inject(CartService);
+  private apiService = inject(ApiService);
+  products = signal<Product[]>([])
 
   ngOnInit() {
-    this.products.set([
-      {
-        id: 1,
-        title: 'Fjallraven - Foldsack No. 1 Backpack, Fits 15 Laptops',
-        price: 109.95,
-        description: 'Your perfect pack for everyday use and walks in the forest. Stash your laptop (up to 15 inches) in the padded sleeve, your everyday',
-        category: Category.MenSClothing,
-        image: 'https://fakestoreapi.com/img/81fPKd-2AYL._AC_SL1500_.jpg',
-        rating: { rate: 3.9, count: 120 },
+    this.apiService.getProducts().subscribe({
+      next: (products) => {
+        this.products.set(products);
       },
-    ]);
+      error: (err) => console.error(err)
+    })
   }
 
   addToCart(product: Product) {

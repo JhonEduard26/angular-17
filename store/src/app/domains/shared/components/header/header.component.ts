@@ -1,6 +1,5 @@
-import { Component, Input, Output, SimpleChanges, inject, signal } from '@angular/core';
-import { Product } from '../../models/product.model';
-import { CartService } from '../../services/cart.service';
+import { Component, inject, signal } from '@angular/core';
+import { CartService } from '@shared/services/cart.service';
 
 @Component({
   selector: 'app-header',
