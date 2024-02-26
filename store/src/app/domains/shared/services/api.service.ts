@@ -13,4 +13,8 @@ export class ApiService {
   getProducts() {
     return this.http.get<Product[]>(`${this.baseUrl}/products`)
   }
+
+  getSingleProduct(id: string) {
+    return this.http.get<Product>(`${this.baseUrl}/products/${id}`)
+  }
 }
