@@ -1,5 +1,16 @@
-<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-  @for (product of products(); track $index) {
-  <app-product [product]="product" (addToCart)="addToCart($event)"></app-product>
-  }
+<div class="flex space-x-4">
+  <div>
+    <ul class="flex flex-col gap-y-2 w-60">
+      @for (category of categories(); track $index) {
+      <li>
+        <a href="" class="capitalize font-semibold">{{category}}</a>
+      </li>
+      }
+    </ul>
+  </div>
+  <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 w-full">
+    @for (product of products(); track $index) {
+    <app-product [product]="product" (addToCart)="addToCart($event)"></app-product>
+    }
+  </div>
 </div>
