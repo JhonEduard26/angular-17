@@ -10,7 +10,10 @@ export class ApiService {
   private baseUrl = 'https://fakestoreapi.com'
   private http = inject(HttpClient);
 
-  getProducts() {
+  getProducts(category_id?: string) {
+    if (category_id) {
+      return this.http.get<Product[]>(`${this.baseUrl}/products/category/${category_id}`)
+    }
     return this.http.get<Product[]>(`${this.baseUrl}/products`)
   }
 

@@ -11,6 +11,7 @@ export class SlugifyPipe implements PipeTransform {
       .replace(/\s+/g, '-')
       .replace(/ñ/g, 'n')
       .replace(/[()]/g, '')
+      .replace("'", '')
       .replace(/-+/g, '-')
       .toLowerCase();
   }

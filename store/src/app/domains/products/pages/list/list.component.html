@@ -1,9 +1,13 @@
 <div class="flex space-x-4">
   <div>
-    <ul class="flex flex-col gap-y-2 w-60">
+    <ul class="flex flex-col gap-y-2 w-40">
+      <li>
+        <a routerLink="/" class="capitalize font-semibold">all</a>
+      </li>
       @for (category of categories(); track $index) {
       <li>
-        <a href="" class="capitalize font-semibold">{{category}}</a>
+        <a routerLink="/" [queryParams]="{'category_id': category}"
+          class="capitalize font-semibold">{{category}}</a>
       </li>
       }
     </ul>
